@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "177359250787",
+    "firebase_url": "https://ondetem-60d2e.firebaseio.com",
+    "project_id": "ondetem-60d2e",
+    "storage_bucket": "ondetem-60d2e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177359250787:android:a6f78106bea13fcf",
+        "android_client_info": {
+          "package_name": "br.ufg.inf.dsdm.ondetem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "177359250787-djmiutbgttl2kjm5lqtt4el2m7229te2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.ufg.inf.dsdm.ondetem",
+            "certificate_hash": "f1368a622378e6d8a4b0ca368cade4c79eb3a3fd"
+          }
+        },
+        {
+          "client_id": "177359250787-8uupsk71l3at7dgbp845n38q6tdvb828.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDazTGHRxKcY6v3wWkPYIp6Vhxik-Ac8XM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177359250787-8uupsk71l3at7dgbp845n38q6tdvb828.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
