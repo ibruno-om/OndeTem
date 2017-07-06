@@ -1,6 +1,8 @@
 package br.ufg.inf.dsdm.ondetem;
 
 import android.content.pm.PermissionGroupInfo;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufg.inf.dsdm.ondetem.helpers.PerguntaHelper;
 import br.ufg.inf.dsdm.ondetem.model.Pergunta;
 
 public class Home extends AppCompatActivity {
@@ -27,7 +30,7 @@ public class Home extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-    private List<Pergunta> perguntas;
+    private PerguntaHelper perguntaHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +43,8 @@ public class Home extends AppCompatActivity {
 
         mAuth.signInWithEmailAndPassword("ibruno.om@gmail.com", "senha321");
 
-        perguntas = new ArrayList<Pergunta>();
+        perguntaHelper = new PerguntaHelper();
 
-        perguntas.add(new Pergunta());
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
 
@@ -53,39 +55,12 @@ public class Home extends AppCompatActivity {
 
                 if (user != null) {
 
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference reference = database.getReference();
+                    List<Pergunta> perguntas = perguntaHelper.listarPeguntasUsuario(user.getUid());
 
-                    reference.child("user").child(user.getUid())
-                            .child("pergunta").addValueEventListener(new ValueEventListener() {
+                    ArrayAdapter adapter = new ArrayAdapter<Pergunta>(Home.this,
+                            android.R.layout.simple_list_item_1, perguntas);
 
-
-
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                            perguntas.clear();
-
-                            for (DataSnapshot child : children) {
-                                Pergunta pergunta = child.getValue(Pergunta.class);
-                                perguntas.add(pergunta);
-                            }
-
-                            ArrayAdapter adapter = new ArrayAdapter<Pergunta>(Home.this,
-                                    android.R.layout.simple_list_item_1, perguntas);
-
-                            questionList.setAdapter(adapter);
-
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    Log.d("LISTA", "Deu certo");
+                    questionList.setAdapter(adapter);
                 }
 
             }
