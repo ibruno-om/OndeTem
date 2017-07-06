@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.ufg.inf.dsdm.ondetem.Home">
+    tools:context="br.ufg.inf.dsdm.ondetem.HomeActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
