@@ -15,17 +15,6 @@
         tools:layout_editor_absoluteY="8dp">
 
         <EditText
-            android:id="@+id/userName"
-            android:layout_width="368dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Username"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="4dp" />
-
-        <EditText
             android:id="@+id/realName"
             android:layout_width="368dp"
             android:layout_height="wrap_content"
@@ -44,6 +33,15 @@
             android:ems="10"
             android:hint="E-mail"
             android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/passwordUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Senha"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/registerUser"
