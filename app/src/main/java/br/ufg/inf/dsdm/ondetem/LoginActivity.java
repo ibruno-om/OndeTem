@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 }
-            })
+            });
 
         }
 
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        })
+        });
 
     }
 
