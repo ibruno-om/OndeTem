@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.ufg.inf.dsdm.ondetem.LoginActivity">
+
+    <EditText
+        android:id="@+id/loginEmail"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="E-mail"
+        android:inputType="textEmailAddress"
+        tools:layout_editor_absoluteY="7dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <EditText
+        android:id="@+id/loginPassword"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Senha"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="50dp" />
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:text="ENTRAR"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="93dp" />
+
+    <Button
+        android:id="@+id/loginCreate"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:text="CRIAR CONTA"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="445dp" />
+</android.support.constraint.ConstraintLayout>
