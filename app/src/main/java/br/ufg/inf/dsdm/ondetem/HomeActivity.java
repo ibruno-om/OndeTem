@@ -41,6 +41,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        mAuth = FirebaseAuth.getInstance();
+
         mQuestionList = (ListView) findViewById(R.id.questionList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mRegisterUser = (MenuItem) findViewById(R.id.registerUser);
@@ -58,17 +60,21 @@ public class HomeActivity extends AppCompatActivity {
 
                 switch (item.getItemId()){
                     case R.id.login :
-                        Toast.makeText(HomeActivity.this, "Login", Toast.LENGTH_LONG).show();
+
                         Intent intentLogin = new Intent(HomeActivity.this, LoginActivity.class);
                         startActivity(intentLogin);
 
+                        break;
+                    case R.id.logout :
+                        mAuth.signOut();
+                        Toast.makeText(HomeActivity.this, "Logout Efetuado", Toast.LENGTH_LONG).show();
                         break;
                 }
                 return false;
             }
         });
 
-        mAuth = FirebaseAuth.getInstance();
+
 
         perguntaHelper = new PerguntaHelper();
 
@@ -121,6 +127,8 @@ public class HomeActivity extends AppCompatActivity {
                             android.R.layout.simple_list_item_1, perguntas);
 
                     mQuestionList.setAdapter(adapter);
+                } else {
+                    mQuestionList.clearChoices();
                 }
 
             }
