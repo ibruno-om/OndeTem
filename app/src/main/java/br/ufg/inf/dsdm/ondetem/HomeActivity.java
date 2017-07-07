@@ -8,10 +8,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,9 +30,6 @@ public class HomeActivity extends AppCompatActivity {
     private ListView mQuestionList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private MenuItem mRegisterUser;
-    private AutoCompleteTextView mAutoCompleteTextView;
-
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
@@ -45,7 +45,6 @@ public class HomeActivity extends AppCompatActivity {
 
         mQuestionList = (ListView) findViewById(R.id.questionList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mRegisterUser = (MenuItem) findViewById(R.id.registerUser);
 
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
@@ -58,14 +57,14 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Log.d("MENU", "Foi");
 
-                switch (item.getItemId()){
-                    case R.id.login :
+                switch (item.getItemId()) {
+                    case R.id.login:
 
                         Intent intentLogin = new Intent(HomeActivity.this, LoginActivity.class);
                         startActivity(intentLogin);
 
                         break;
-                    case R.id.logout :
+                    case R.id.logout:
                         mAuth.signOut();
                         Toast.makeText(HomeActivity.this, "Logout Efetuado", Toast.LENGTH_LONG).show();
                         break;
@@ -73,7 +72,6 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
-
 
 
         perguntaHelper = new PerguntaHelper();
@@ -85,16 +83,41 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
 
-        if (mToggle.onOptionsItemSelected(item)){
+        if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.search_menu, menu);
+
+        MenuItem item = menu.findItem(R.id.menuSearch);
+
+        SearchView search = (SearchView) item.getActionView();
+        search.setQueryHint(getResources().getString(R.string.app_name));
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(HomeActivity.this, "Pesquisar", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

@@ -19,12 +19,6 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Onde tem?" />
-
             <ListView
                 android:id="@+id/questionList"
                 android:layout_width="match_parent"
