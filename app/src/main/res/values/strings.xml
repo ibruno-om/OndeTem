@@ -6,6 +6,8 @@
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="myAccount">Minha conta</string>
+    <string name="search">Pesquisar</string>
+
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
