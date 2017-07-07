@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Onde Tem?</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

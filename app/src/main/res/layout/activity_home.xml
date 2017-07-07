@@ -44,7 +44,7 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
+        android:clickable="true"
         app:menu="@menu/navigation_menu">
 
     </android.support.design.widget.NavigationView>
