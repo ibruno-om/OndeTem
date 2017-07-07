@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(task.isSuccessful()){
 
                         checkUserExist();
+                        LoginActivity.this.finish();
 
                     } else {
 

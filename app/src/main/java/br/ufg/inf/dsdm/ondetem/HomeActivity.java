@@ -59,7 +59,8 @@ public class HomeActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.login :
                         Toast.makeText(HomeActivity.this, "Login", Toast.LENGTH_LONG).show();
-                        //Intent intentLogin = new Intent(HomeActivity.this)
+                        Intent intentLogin = new Intent(HomeActivity.this, LoginActivity.class);
+                        startActivity(intentLogin);
 
                         break;
                 }
@@ -68,8 +69,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         mAuth = FirebaseAuth.getInstance();
-
-        mAuth.signInWithEmailAndPassword("ibruno.om@gmail.com", "senha321");
 
         perguntaHelper = new PerguntaHelper();
 
