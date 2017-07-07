@@ -1,5 +1,6 @@
 package br.ufg.inf.dsdm.ondetem;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mLoginPassword;
     private Button mLoginBtn;
 
+    private Button mLoginCreate;
+
     private FirebaseAuth mAuth;
 
     private DatabaseReference mDatabase;
@@ -43,11 +46,23 @@ public class LoginActivity extends AppCompatActivity {
         mLoginPassword = (EditText) findViewById(R.id.loginPassword);
         mLoginBtn = (Button) findViewById(R.id.loginBtn);
 
+        mLoginCreate = (Button) findViewById(R.id.loginCreate);
+
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 checkLogin();
+
+            }
+        });
+
+        mLoginCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intentRegister = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intentRegister);
 
             }
         });

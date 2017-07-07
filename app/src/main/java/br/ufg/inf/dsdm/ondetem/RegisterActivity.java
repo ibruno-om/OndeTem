@@ -1,6 +1,7 @@
 package br.ufg.inf.dsdm.ondetem;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -84,6 +85,10 @@ public class RegisterActivity extends AppCompatActivity {
                         current_user_db.child("image").setValue("default");
 
                         mProgress.dismiss();
+
+                        Intent intentHome = new Intent(RegisterActivity.this, HomeActivity.class);
+                        intentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intentHome);
 
                     }
 
