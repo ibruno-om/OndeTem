@@ -1,12 +1,18 @@
 package br.ufg.inf.dsdm.ondetem;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,6 +27,8 @@ public class HomeActivity extends AppCompatActivity {
     private ListView mQuestionList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private MenuItem mRegisterUser;
+    private AutoCompleteTextView mAutoCompleteTextView;
 
 
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -35,11 +43,29 @@ public class HomeActivity extends AppCompatActivity {
 
         mQuestionList = (ListView) findViewById(R.id.questionList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mRegisterUser = (MenuItem) findViewById(R.id.registerUser);
 
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Log.d("MENU", "Foi");
+
+                switch (item.getItemId()){
+                    case R.id.login :
+                        Toast.makeText(HomeActivity.this, "Login", Toast.LENGTH_LONG).show();
+                        //Intent intentLogin = new Intent(HomeActivity.this)
+
+                        break;
+                }
+                return false;
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -53,8 +79,11 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
 
         if (mToggle.onOptionsItemSelected(item)){
             return true;
