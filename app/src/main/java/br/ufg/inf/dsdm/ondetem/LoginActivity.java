@@ -82,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(task.isSuccessful()){
 
-                        checkUserExist();
                         LoginActivity.this.finish();
 
                     } else {
@@ -95,32 +94,6 @@ public class LoginActivity extends AppCompatActivity {
             });
 
         }
-
-    }
-
-    private void checkUserExist() {
-
-        final String user_id = mAuth.getCurrentUser().getUid();
-
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.hasChild(user_id)){
-
-                } else {
-
-                    Toast.makeText(LoginActivity.this, "Usuário não encontrado!", Toast.LENGTH_LONG).show();
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
     }
 
