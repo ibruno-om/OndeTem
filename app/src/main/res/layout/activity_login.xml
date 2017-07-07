@@ -44,6 +44,7 @@
 
             <Button
                 android:id="@+id/loginBtn"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="368dp"
                 android:layout_height="wrap_content"
                 android:text="ENTRAR"

@@ -19,6 +19,17 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
+            <include
+                layout="@layout/navigation_action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Onde tem?" />
+
             <ListView
                 android:id="@+id/questionList"
                 android:layout_width="match_parent"
@@ -39,7 +50,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:clickable="true"
-        app:menu="@menu/navigation_menu">
+        app:menu="@menu/navigation_menu"
+        app:headerLayout="@layout/navigation_header">
 
     </android.support.design.widget.NavigationView>
 
