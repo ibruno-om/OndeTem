@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/minhaConta"
+
+    <item android:id="@+id/myQuestions"
+        android:title="Minhas Perguntas" />
+
+    <item android:id="@+id/answer"
+        android:title="Responder Perguntas" />
+
+    <item android:id="@+id/minhaConta"
         android:title="@string/myAccount" />
 
     <item
