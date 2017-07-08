@@ -31,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     private ListView mQuestionList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private ArrayAdapter<String> listResult;
 
     private Toolbar mToolbar;
 
@@ -73,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     case R.id.logout:
                         mAuth.signOut();
-                        Toast.makeText(HomeActivity.this, "Logout Efetuado", Toast.LENGTH_LONG).show();
+
                         break;
                 }
                 return false;
@@ -114,7 +115,19 @@ public class HomeActivity extends AppCompatActivity {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(HomeActivity.this, "Pesquisar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, query, Toast.LENGTH_SHORT).show();
+
+                List<String> results = perguntaHelper.findAllQuestions(query);
+
+                if (results != null) {
+                    ArrayAdapter adapter = new ArrayAdapter<String>(HomeActivity.this,
+                            android.R.layout.simple_list_item_1, results);
+
+                    mQuestionList.setAdapter(adapter);
+                } else {
+                    mQuestionList.setAdapter(null);
+                }
+
                 return false;
             }
 
@@ -148,6 +161,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
 
                 user = firebaseAuth.getCurrentUser();
+
 
                 if (user != null) {
 
