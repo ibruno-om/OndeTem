@@ -35,7 +35,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
-
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
