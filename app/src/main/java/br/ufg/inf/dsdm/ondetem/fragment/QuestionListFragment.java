@@ -22,7 +22,6 @@ import java.util.List;
 
 import br.ufg.inf.dsdm.ondetem.R;
 import br.ufg.inf.dsdm.ondetem.model.Pergunta;
-import br.ufg.inf.dsdm.ondetem.viewholder.PerguntaViewHolder;
 
 /**
  * Created by ibruno on 08/07/17.
