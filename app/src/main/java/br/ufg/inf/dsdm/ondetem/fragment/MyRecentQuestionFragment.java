@@ -11,17 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import br.ufg.inf.dsdm.ondetem.R;
-import br.ufg.inf.dsdm.ondetem.model.Pergunta;
 
 /**
  * Created by ibruno on 08/07/17.

@@ -3,6 +3,7 @@ package br.ufg.inf.dsdm.ondetem;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,29 +12,22 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import br.ufg.inf.dsdm.ondetem.fragment.MyRecentQuestionFragment;
 import br.ufg.inf.dsdm.ondetem.fragment.SearchQuestionsFragment;
 import br.ufg.inf.dsdm.ondetem.helpers.PerguntaHelper;
-import br.ufg.inf.dsdm.ondetem.model.Pergunta;
 
 public class HomeActivity extends AppCompatActivity {
 

@@ -1,7 +1,6 @@
 package br.ufg.inf.dsdm.ondetem;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +14,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -28,7 +26,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
 
     private ProgressDialog mProgress;
 
@@ -39,7 +36,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
         mProgress = new ProgressDialog(this);
 
@@ -71,24 +67,32 @@ public class RegisterActivity extends AppCompatActivity {
             mProgress.setMessage("Cadastrando...");
             mProgress.show();
 
+
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (task.isSuccessful()) {
 
-                        String user_id = mAuth.getCurrentUser().getUid();
+                        FirebaseUser user = mAuth.getCurrentUser();
 
-                        DatabaseReference current_user_db = mDatabase.child(user_id);
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(name).build();
 
-                        current_user_db.child("name").setValue(name);
-                        current_user_db.child("image").setValue("default");
+                        user.updateProfile(profileUpdates);
+
 
                         mProgress.dismiss();
+
+                        /*
+                        Está criando uma nova instância e não trazendo o formilário original
+
 
                         Intent intentHome = new Intent(RegisterActivity.this, HomeActivity.class);
                         intentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intentHome);
+
+                        */
 
                     }
 

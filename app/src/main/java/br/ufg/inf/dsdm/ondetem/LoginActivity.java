@@ -1,10 +1,11 @@
 package br.ufg.inf.dsdm.ondetem;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringDef;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -31,16 +30,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private DatabaseReference mDatabase;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
         mLoginEmail = (EditText) findViewById(R.id.loginEmail);
         mLoginPassword = (EditText) findViewById(R.id.loginPassword);
@@ -74,13 +69,24 @@ public class LoginActivity extends AppCompatActivity {
         String email = mLoginEmail.getText().toString().trim();
         String password = mLoginPassword.getText().toString().trim();
 
-        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
 
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
+
+                        String uid = mAuth.getCurrentUser().getUid();
+
+                        String key = getResources().getString(R.string.uid_user_session);
+                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.remove(key);
+                        editor.commit();
+                        editor.putString(key, uid);
+                        editor.commit();
 
                         LoginActivity.this.finish();
 
