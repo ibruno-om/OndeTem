@@ -24,18 +24,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Onde tem?" />
 
-            <ListView
-                android:id="@+id/questionList"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="16dp" />
+                android:id="@+id/questionListFrame"/>
 
 
         </LinearLayout>
