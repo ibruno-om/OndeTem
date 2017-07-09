@@ -19,18 +19,16 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView"
+            <include
+                layout="@layout/navigation_action"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Onde tem?" />
+                android:layout_height="wrap_content" />
 
-            <ListView
-                android:id="@+id/questionList"
+
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="16dp" />
+                android:id="@+id/questionListFrame"/>
 
 
         </LinearLayout>
@@ -44,8 +42,9 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:menu="@menu/navigation_menu">
+        android:clickable="true"
+        app:menu="@menu/navigation_menu"
+        app:headerLayout="@layout/navigation_header">
 
     </android.support.design.widget.NavigationView>
 

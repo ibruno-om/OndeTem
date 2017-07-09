@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/myQuestions"
+        android:title="Minhas Perguntas" />
+
+    <item android:id="@+id/answer"
+        android:title="Responder Perguntas" />
+
     <item android:id="@+id/minhaConta"
-        android:title="Minha Conta"/>
+        android:title="@string/myAccount" />
 
-    <item android:id="@+id/login"
-        android:title="Login"/>
+    <item
+        android:id="@+id/login"
+        android:title="@string/login" />
 
-    <item android:id="@+id/logout"
-        android:title="Logout"/>
+    <item
+        android:id="@+id/logout"
+        android:title="@string/logout" />
 </menu>
