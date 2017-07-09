@@ -1,8 +1,13 @@
 package br.ufg.inf.dsdm.ondetem;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,23 +26,23 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import br.ufg.inf.dsdm.ondetem.fragment.MyRecentQuestionFragment;
+import br.ufg.inf.dsdm.ondetem.fragment.SearchQuestionsFragment;
 import br.ufg.inf.dsdm.ondetem.helpers.PerguntaHelper;
 import br.ufg.inf.dsdm.ondetem.model.Pergunta;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ListView mQuestionList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private ArrayAdapter<String> listResult;
 
     private Toolbar mToolbar;
 
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
-    private FirebaseUser user;
     private PerguntaHelper perguntaHelper;
 
     @Override
@@ -50,13 +55,16 @@ public class HomeActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.nav_action);
         setSupportActionBar(mToolbar);
 
-        mQuestionList = (ListView) findViewById(R.id.questionList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        setQuestionFragment(new MyRecentQuestionFragment());
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -83,21 +91,15 @@ public class HomeActivity extends AppCompatActivity {
 
         perguntaHelper = new PerguntaHelper();
 
-        //Iniciaiza a sessão de usuário
-        initUser();
-
 
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
         if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -115,18 +117,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Toast.makeText(HomeActivity.this, query, Toast.LENGTH_SHORT).show();
-
-                List<Pergunta> results = perguntaHelper.findAllQuestions(query);
-
-                if (results != null) {
-                    ArrayAdapter adapter = new ArrayAdapter<Pergunta>(HomeActivity.this,
-                            android.R.layout.simple_list_item_1, results);
-
-                    mQuestionList.setAdapter(adapter);
-                } else {
-                    mQuestionList.setAdapter(null);
-                }
-
+                registerRecentQuestion(query);
+                SearchQuestionsFragment searchQuestionsFragment = new SearchQuestionsFragment();
+                searchQuestionsFragment.setQuery(query);
+                setQuestionFragment(searchQuestionsFragment);
                 return false;
             }
 
@@ -136,46 +130,45 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        search.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                Toast.makeText(HomeActivity.this, "Fechou", Toast.LENGTH_SHORT).show();
+                setQuestionFragment(new MyRecentQuestionFragment());
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
+    private void setQuestionFragment(Fragment questionFragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ftransaction = fragmentManager.beginTransaction();
+        ftransaction.replace(R.id.questionListFrame, questionFragment);
+        ftransaction.commit();
     }
 
-    private void initUser() {
+    private void registerRecentQuestion(String query) {
+        String key = getResources().getString(R.string.recent_question_lits);
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        Set<String> questions = sharedPref.getStringSet(key, new HashSet<String>());
 
-            @Override
-            public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
+        questions.add(query);
 
-                user = firebaseAuth.getCurrentUser();
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove(key);
+        editor.commit();
+        editor.putStringSet(key, questions);
+        editor.commit();
 
-
-                if (user != null) {
-
-                    List<Pergunta> perguntas = perguntaHelper.listarPeguntasUsuario(user.getUid());
-
-                    ArrayAdapter adapter = new ArrayAdapter<Pergunta>(HomeActivity.this,
-                            android.R.layout.simple_list_item_1, perguntas);
-
-                    mQuestionList.setAdapter(adapter);
-                } else {
-                    mQuestionList.clearChoices();
-                }
-
-            }
-        };
     }
+
+
 }

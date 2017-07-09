@@ -3,6 +3,7 @@ package br.ufg.inf.dsdm.ondetem.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,10 @@ public abstract class QuestionListFragment extends Fragment implements ValueEven
 
         mQuestionList = (ListView) view.findViewById(R.id.questionList);
 
+        Query query = getQuery(mDatabase);
+
+        query.addValueEventListener(this);
+
         mQuestionList.setAdapter(mAdapter);
 
         return view;
@@ -55,9 +60,11 @@ public abstract class QuestionListFragment extends Fragment implements ValueEven
         List<Pergunta> perguntas = new ArrayList<Pergunta>();
         mAdapter.clear();
 
+        Log.d("QUESTION", dataSnapshot.getValue().toString());
+
         if (dataSnapshot.exists()) {
-            for(DataSnapshot child : dataSnapshot.getChildren()){
-                perguntas.add( child.getValue(Pergunta.class));
+            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                perguntas.add(child.getValue(Pergunta.class));
             }
         }
 
