@@ -117,10 +117,10 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 Toast.makeText(HomeActivity.this, query, Toast.LENGTH_SHORT).show();
 
-                List<String> results = perguntaHelper.findAllQuestions(query);
+                List<Pergunta> results = perguntaHelper.findAllQuestions(query);
 
                 if (results != null) {
-                    ArrayAdapter adapter = new ArrayAdapter<String>(HomeActivity.this,
+                    ArrayAdapter adapter = new ArrayAdapter<Pergunta>(HomeActivity.this,
                             android.R.layout.simple_list_item_1, results);
 
                     mQuestionList.setAdapter(adapter);
@@ -155,6 +155,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initUser() {
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
 
             @Override

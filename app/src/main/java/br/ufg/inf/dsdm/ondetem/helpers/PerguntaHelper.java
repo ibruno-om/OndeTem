@@ -30,19 +30,24 @@ public class PerguntaHelper {
         ;
     }
 
-    public List<String> findAllQuestions(String query) {
+    public List<Pergunta> findAllQuestions(String query) {
 
-        final List<String> questions = new ArrayList<String>();
+        final List<Pergunta> questions = new ArrayList<Pergunta>();
 
         DatabaseReference reference = database.getReference();
 
-        Query questionQuery = reference.child("pergunta").orderByChild("conteudo").startAt(query);
+        Query questionQuery = reference.child("pergunta").orderByChild("conteudo").startAt(query)
+                .endAt(query + "\\uf8ff");
 
-        questionQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        questionQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Log.d("CONSULTA", "Agora vai" + dataSnapshot.getValue());
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+
+                for (DataSnapshot child: children) {
+                    questions.add(child.getValue(Pergunta.class));
+                }
 
             }
 
@@ -52,6 +57,8 @@ public class PerguntaHelper {
             }
         });
 
+        Log.d("CONSULTA", questions.toString());
+
         return questions;
 
     }
@@ -59,7 +66,7 @@ public class PerguntaHelper {
     public List<Pergunta> listarPeguntasUsuario(String UID) {
         final List<Pergunta> perguntas = new ArrayList<Pergunta>();
 
-        reference.child("user").child(UID).child("pergunta")
+        reference.child("user").child(UID).child("pergunta").orderByChild("conteudo")
                 .addValueEventListener(new ValueEventListener() {
 
                     @Override
