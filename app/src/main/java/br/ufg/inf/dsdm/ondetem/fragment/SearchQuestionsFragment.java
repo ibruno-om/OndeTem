@@ -1,6 +1,5 @@
 package br.ufg.inf.dsdm.ondetem.fragment;
 
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
