@@ -69,6 +69,8 @@ public abstract class QuestionListFragment extends Fragment implements ValueEven
             for (DataSnapshot child : dataSnapshot.getChildren()) {
                 perguntas.add(child.getValue(Pergunta.class));
             }
+        } else {
+            emptyData();
         }
 
         mAdapter.addAll(perguntas);
@@ -91,6 +93,8 @@ public abstract class QuestionListFragment extends Fragment implements ValueEven
     }
 
     public abstract Query getQuery(DatabaseReference databaseReference);
+
+    public abstract void emptyData();
 
 
 }

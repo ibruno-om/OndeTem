@@ -13,4 +13,9 @@ public class MyQuestionsFragment extends QuestionListFragment {
         return databaseReference.child("user").child(getUid()).child("pergunta")
                 .orderByChild("conteudo");
     }
+
+    @Override
+    public void emptyData() {
+        //Do nothing
+    }
 }
