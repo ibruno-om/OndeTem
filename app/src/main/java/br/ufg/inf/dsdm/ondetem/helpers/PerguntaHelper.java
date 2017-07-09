@@ -1,12 +1,9 @@
 package br.ufg.inf.dsdm.ondetem.helpers;
 
-import android.util.Log;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -18,6 +15,7 @@ import br.ufg.inf.dsdm.ondetem.model.Pergunta;
  * Created by ibruno on 06/07/17.
  */
 
+
 public class PerguntaHelper {
 
 
@@ -28,39 +26,6 @@ public class PerguntaHelper {
         this.database = FirebaseDatabase.getInstance();
         this.reference = database.getReference();
         ;
-    }
-
-    public List<Pergunta> findAllQuestions(String query) {
-
-        final List<Pergunta> questions = new ArrayList<Pergunta>();
-
-        DatabaseReference reference = database.getReference();
-
-        Query questionQuery = reference.child("pergunta").orderByChild("conteudo").startAt(query)
-                .endAt(query + "\\uf8ff");
-
-        questionQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-
-                for (DataSnapshot child: children) {
-                    questions.add(child.getValue(Pergunta.class));
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        Log.d("CONSULTA", questions.toString());
-
-        return questions;
-
     }
 
     public List<Pergunta> listarPeguntasUsuario(String UID) {

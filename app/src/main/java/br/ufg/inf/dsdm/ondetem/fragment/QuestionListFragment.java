@@ -1,8 +1,11 @@
 package br.ufg.inf.dsdm.ondetem.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +80,14 @@ public abstract class QuestionListFragment extends Fragment implements ValueEven
     }
 
     public String getUid() {
-        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        String key = getResources().getString(R.string.uid_user_session);
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        String uid = sharedPref.getString(key, "");
+
+        return !TextUtils.isEmpty(uid) ? uid : FirebaseAuth.getInstance().getCurrentUser().getUid();
+
     }
 
     public abstract Query getQuery(DatabaseReference databaseReference);
