@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +37,8 @@ public abstract class QuestionListFragment extends Fragment implements ValueEven
     private DatabaseReference mDatabase;
     private ArrayAdapter<Pergunta> mAdapter;
     private ListView mQuestionList;
+    private String anonymousKey;
+    private String uid;
 
     @Nullable
     @Override
@@ -43,6 +46,14 @@ public abstract class QuestionListFragment extends Fragment implements ValueEven
         View view = inflater.inflate(R.layout.fragment_question_list, container, false);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        String uidKey = view.getResources().getString(R.string.uid_user_session);
+        anonymousKey = view.getResources().getString(R.string.anonymous_user);
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        uid = sharedPref.getString(uidKey, "");
+
 
         mAdapter = new ArrayAdapter<Pergunta>(getContext(), android.R.layout.simple_list_item_1,
                 new ArrayList<Pergunta>());
@@ -63,9 +74,9 @@ public abstract class QuestionListFragment extends Fragment implements ValueEven
         List<Pergunta> perguntas = new ArrayList<Pergunta>();
         mAdapter.clear();
 
-        Log.d("QUESTION", dataSnapshot.getValue().toString());
-
         if (dataSnapshot.exists()) {
+            Log.d("CONSULTA", "Resultado: " + dataSnapshot);
+
             for (DataSnapshot child : dataSnapshot.getChildren()) {
                 perguntas.add(child.getValue(Pergunta.class));
             }
@@ -83,12 +94,10 @@ public abstract class QuestionListFragment extends Fragment implements ValueEven
 
     public String getUid() {
 
-        String key = getResources().getString(R.string.uid_user_session);
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        String uid = sharedPref.getString(key, "");
-
-        return !TextUtils.isEmpty(uid) ? uid : FirebaseAuth.getInstance().getCurrentUser().getUid();
+        return !TextUtils.isEmpty(uid) ? uid : user != null ? user.getUid() :
+                anonymousKey;
 
     }
 

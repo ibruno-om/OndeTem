@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -110,16 +111,28 @@ public class HomeActivity extends AppCompatActivity {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(HomeActivity.this, query, Toast.LENGTH_SHORT).show();
-                registerRecentQuestion(query);
-                SearchQuestionsFragment searchQuestionsFragment = new SearchQuestionsFragment();
-                searchQuestionsFragment.setQuery(query);
-                setQuestionFragment(searchQuestionsFragment);
+                if (!TextUtils.isEmpty(query) && query.length() >= 3) {
+                    Toast.makeText(HomeActivity.this, query, Toast.LENGTH_SHORT).show();
+                    registerRecentQuestion(query);
+                    SearchQuestionsFragment searchQuestionsFragment = new SearchQuestionsFragment();
+                    searchQuestionsFragment.setQuery(query);
+                    searchQuestionsFragment.setInsert(true);
+                    setQuestionFragment(searchQuestionsFragment);
+                } else {
+                    Toast.makeText(HomeActivity.this, "Quantidade insuficiente de caracteres!",
+                            Toast.LENGTH_SHORT).show();
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (!TextUtils.isEmpty(newText) && newText.length() >= 3) {
+                    Toast.makeText(HomeActivity.this, newText, Toast.LENGTH_SHORT).show();
+                    SearchQuestionsFragment searchQuestionsFragment = new SearchQuestionsFragment();
+                    searchQuestionsFragment.setQuery(newText);
+                    setQuestionFragment(searchQuestionsFragment);
+                }
                 return false;
             }
         });
