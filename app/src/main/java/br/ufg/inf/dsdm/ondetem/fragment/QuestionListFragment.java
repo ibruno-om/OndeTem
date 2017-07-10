@@ -1,6 +1,7 @@
 package br.ufg.inf.dsdm.ondetem.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -25,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufg.inf.dsdm.ondetem.QuestionActivity;
 import br.ufg.inf.dsdm.ondetem.R;
 import br.ufg.inf.dsdm.ondetem.model.Pergunta;
 
@@ -59,6 +62,18 @@ public abstract class QuestionListFragment extends Fragment implements ValueEven
                 new ArrayList<Pergunta>());
 
         mQuestionList = (ListView) view.findViewById(R.id.questionList);
+
+        mQuestionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Pergunta pergunta = (Pergunta) parent.getItemAtPosition(position);
+
+                Intent intent = new Intent(getActivity(), QuestionActivity.class);
+                intent.putExtra("question", pergunta);
+
+                startActivity(intent);
+            }
+        });
 
         Query query = getQuery(mDatabase);
 
