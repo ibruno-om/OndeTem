@@ -128,7 +128,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (!TextUtils.isEmpty(newText) && newText.length() >= 3) {
-                    Toast.makeText(HomeActivity.this, newText, Toast.LENGTH_SHORT).show();
                     SearchQuestionsFragment searchQuestionsFragment = new SearchQuestionsFragment();
                     searchQuestionsFragment.setQuery(newText);
                     setQuestionFragment(searchQuestionsFragment);
