@@ -28,6 +28,7 @@ public class PerguntaHelper {
         ;
     }
 
+    @Deprecated
     public List<Pergunta> listarPeguntasUsuario(String UID) {
         final List<Pergunta> perguntas = new ArrayList<Pergunta>();
 
