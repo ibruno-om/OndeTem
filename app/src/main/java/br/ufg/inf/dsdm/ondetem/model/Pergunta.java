@@ -14,7 +14,7 @@ public class Pergunta implements Serializable {
 
     }
 
-    public Pergunta(String uid, String conteudo) {
+    public Pergunta(String conteudo) {
         this.conteudo = conteudo;
     }
 
