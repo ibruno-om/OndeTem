@@ -6,6 +6,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.util.UUID;
+
 import br.ufg.inf.dsdm.ondetem.model.Pergunta;
 
 /**
@@ -37,14 +39,13 @@ public class SearchQuestionsFragment extends QuestionListFragment {
 
             Pergunta pergunta = new Pergunta(query);
 
-            String questionKey = mQuestionRef.push().getKey();
+            String questionKey = UUID.nameUUIDFromBytes(query.toUpperCase().getBytes()).toString();
             mQuestionRef.child(questionKey).setValue(pergunta);
 
             DatabaseReference mUserRef = FirebaseDatabase.getInstance().getReference("user")
                     .child(uid).child("pergunta").child(questionKey);
 
             mUserRef.setValue(pergunta);
-
 
 
         }
