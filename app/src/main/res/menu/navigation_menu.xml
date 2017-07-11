@@ -2,20 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/myQuestions"
-        android:title="Minhas Perguntas" />
+    <group android:id="@+id/grp1" android:checkableBehavior="single" >
+        <item android:id="@+id/myQuestions"
+            android:title="Minhas Perguntas" />
 
-    <item android:id="@+id/answer"
-        android:title="Responder Perguntas" />
+        <item android:id="@+id/minhaConta"
+            android:title="@string/myAccount" />
 
-    <item android:id="@+id/minhaConta"
-        android:title="@string/myAccount" />
+        <item
+            android:id="@+id/login"
+            android:title="@string/login" />
+    </group>
 
-    <item
-        android:id="@+id/login"
-        android:title="@string/login" />
+    <group android:id="@+id/grp2" android:checkableBehavior="single" >
+        <item
+            android:id="@+id/help"
+            android:title="@string/help" />
 
-    <item
-        android:id="@+id/logout"
-        android:title="@string/logout" />
+        <item
+            android:id="@+id/logout"
+            android:title="@string/logout" />
+    </group>
+
 </menu>
