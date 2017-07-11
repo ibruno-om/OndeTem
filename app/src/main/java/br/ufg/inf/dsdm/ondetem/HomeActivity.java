@@ -18,10 +18,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import org.w3c.dom.Text;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -39,6 +44,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private PerguntaHelper perguntaHelper;
+
+    private View headerView;
+    private TextView navUsername;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +69,11 @@ public class HomeActivity extends AppCompatActivity {
 
         setQuestionFragment(new MyRecentQuestionFragment());
 
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        mUser = mAuth.getCurrentUser();
+        updateUI(mUser);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -178,6 +190,19 @@ public class HomeActivity extends AppCompatActivity {
         editor.commit();
         editor.putStringSet(key, questions);
         editor.commit();
+
+    }
+
+    private void updateUI(FirebaseUser user) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        navUsername = (TextView) headerView.findViewById(R.id.textView);
+
+        if (user != null) {
+            navUsername.setText(user.getDisplayName());
+        } else {
+            navUsername.setText("Não registrado");
+        }
 
     }
 
