@@ -71,8 +71,7 @@ public class HomeActivity extends AppCompatActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        mUser = mAuth.getCurrentUser();
-        updateUI(mUser);
+        updateUI();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -93,6 +92,10 @@ public class HomeActivity extends AppCompatActivity {
                         editor.clear();
                         editor.commit();
                         mAuth.signOut();
+                        mDrawerLayout.closeDrawers();
+                        Toast.makeText(HomeActivity.this, "Seu usuário foi desconetado!",
+                                Toast.LENGTH_SHORT).show();
+                        updateUI();
 
                         break;
                 }
@@ -193,15 +196,31 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void updateUI(FirebaseUser user) {
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateUI();
+
+    }
+
+    private void updateUI() {
+        mUser = mAuth.getCurrentUser();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         navUsername = (TextView) headerView.findViewById(R.id.textView);
-
-        if (user != null) {
-            navUsername.setText(user.getDisplayName());
+        Menu navMenu = navigationView.getMenu();
+        if (mUser != null) {
+            navUsername.setText(mUser.getDisplayName());
+            navMenu.findItem(R.id.myQuestions).setVisible(true);
+            navMenu.findItem(R.id.minhaConta).setVisible(true);
+            navMenu.findItem(R.id.login).setVisible(false);
+            navMenu.findItem(R.id.logout).setVisible(true);
         } else {
             navUsername.setText("Não registrado");
+            navMenu.findItem(R.id.myQuestions).setVisible(false);
+            navMenu.findItem(R.id.minhaConta).setVisible(false);
+            navMenu.findItem(R.id.login).setVisible(true);
+            navMenu.findItem(R.id.logout).setVisible(false);
         }
 
     }
