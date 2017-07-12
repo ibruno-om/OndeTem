@@ -30,4 +30,5 @@
     </string>
     <string name="title_activity_maps">Map</string>
     <string name="myQuestionTitle">Minhas Perguntas</string>
+    <string name="loginButton">ENTRAR</string>
 </resources>
