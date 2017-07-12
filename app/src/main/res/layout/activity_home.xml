@@ -13,11 +13,9 @@
 
         <LinearLayout
             android:id="@+id/linearQuestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <include
                 layout="@layout/navigation_action"
@@ -26,9 +24,9 @@
 
 
             <FrameLayout
+                android:id="@+id/questionListFrame"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/questionListFrame"/>
+                android:layout_height="match_parent" />
 
 
         </LinearLayout>
@@ -43,8 +41,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:clickable="true"
-        app:menu="@menu/navigation_menu"
-        app:headerLayout="@layout/navigation_header">
+        app:headerLayout="@layout/navigation_header"
+        app:menu="@menu/navigation_menu">
 
     </android.support.design.widget.NavigationView>
 
