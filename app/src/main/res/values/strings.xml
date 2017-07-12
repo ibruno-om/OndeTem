@@ -11,6 +11,7 @@
     <string name="recent_question_lits">RECENT_QUESTION_LIST</string>
     <string name="uid_user_session">UID_USER_SESSION</string>
     <string name="anonymous_user">anonymous</string>
+    <string name="empty_question_list">Nenhum resultado encontrado</string>
 
 
     <!-- Strings related to login -->
