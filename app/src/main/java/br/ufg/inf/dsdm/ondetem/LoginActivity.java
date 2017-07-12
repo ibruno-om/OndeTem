@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -60,7 +61,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         mLoginCreate = (TextView) findViewById(R.id.loginCreate);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getResources().getString(R.string.google_maps_key))
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
                 .requestEmail()
                 .build();
 
@@ -121,24 +123,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                         String uid = mAuth.getCurrentUser().getUid();
 
-                        String key = getResources().getString(R.string.uid_user_session);
-                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        String name = mAuth.getCurrentUser().getDisplayName();
-                        editor.remove(key);
-                        editor.commit();
-                        editor.putString(key, uid);
-                        editor.commit();
-
-                        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
-                        SharedPreferences.Editor edit = prefs.edit();
-                        edit.putString("username", name);
-                        edit.commit();
-
-                        mProgress.dismiss();
-
-                        LoginActivity.this.finish();
+                        createLoginSession(uid);
 
                     } else {
 
@@ -156,6 +141,27 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
+    private void createLoginSession(String uid) {
+        String key = getResources().getString(R.string.uid_user_session);
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        String name = mAuth.getCurrentUser().getDisplayName();
+        editor.remove(key);
+        editor.commit();
+        editor.putString(key, uid);
+        editor.commit();
+
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putString("username", name);
+        edit.commit();
+
+        mProgress.dismiss();
+
+        LoginActivity.this.finish();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -167,6 +173,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+            } else {
+                int statusCode = result.getStatus().getStatusCode();
+                Toast.makeText(this, "Google status code: " + GoogleSignInStatusCodes.getStatusCodeString(statusCode), Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -181,8 +190,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
                         if (!task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, "Autenticação Falhou.",
                                     Toast.LENGTH_SHORT).show();
+                        } else {
+                            String uid = mAuth.getCurrentUser().getUid();
+
+                            createLoginSession(uid);
                         }
 
                     }

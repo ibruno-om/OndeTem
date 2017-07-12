@@ -23,4 +23,5 @@
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
         AIzaSyBubR2IILiqmnROjATQ6uJJRqBrBco-VOg
     </string>
+    <string name="server_client_id" templateMergeStrategy="preserve" translatable="false">177359250787-djmiutbgttl2kjm5lqtt4el2m7229te2.apps.googleusercontent.com</string>
 </resources>
