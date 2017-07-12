@@ -12,6 +12,8 @@
     <string name="uid_user_session">UID_USER_SESSION</string>
     <string name="anonymous_user">anonymous</string>
     <string name="empty_question_list">Nenhum resultado encontrado</string>
+    <string name="empty_location_list">Nenhuma localização cadastrada</string>
+    <string name="first">Seja o primeiro a responder</string>
 
 
     <!-- Strings related to login -->
@@ -27,4 +29,5 @@
         completions."
     </string>
     <string name="title_activity_maps">Map</string>
+    <string name="myQuestionTitle">Minhas Perguntas</string>
 </resources>
