@@ -7,7 +7,7 @@ import com.google.firebase.database.Query;
  * Created by ibruno on 08/07/17.
  */
 
-public class MyQuestionsFragment extends QuestionListFragment {
+public class MyQuestionFragment extends QuestionListFragment {
     @Override
     public Query getQuery(DatabaseReference databaseReference) {
         return databaseReference.child("user").child(getUid()).child("pergunta")

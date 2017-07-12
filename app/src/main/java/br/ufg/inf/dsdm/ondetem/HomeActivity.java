@@ -78,13 +78,21 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Log.d("MENU", "Foi");
 
+
                 switch (item.getItemId()) {
                     case R.id.login:
-                        mDrawerLayout.closeDrawers();
+
                         Intent intentLogin = new Intent(HomeActivity.this, LoginActivity.class);
                         startActivity(intentLogin);
 
                         break;
+                    case R.id.myQuestions:
+
+                        Intent intentMyQuestion = new Intent(HomeActivity.this, MyQuestionActivity.class);
+                        startActivity(intentMyQuestion);
+
+                        break;
+
                     case R.id.logout:
 
                         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
@@ -92,13 +100,15 @@ public class HomeActivity extends AppCompatActivity {
                         editor.clear();
                         editor.commit();
                         mAuth.signOut();
-                        mDrawerLayout.closeDrawers();
                         Toast.makeText(HomeActivity.this, "Seu usuário foi desconetado!",
                                 Toast.LENGTH_SHORT).show();
                         updateUI();
 
                         break;
                 }
+
+                mDrawerLayout.closeDrawers();
+
                 return false;
             }
         });
