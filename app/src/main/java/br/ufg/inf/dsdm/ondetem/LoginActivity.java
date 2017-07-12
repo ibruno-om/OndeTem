@@ -1,5 +1,6 @@
 package br.ufg.inf.dsdm.ondetem;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,12 +43,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient mGoogleApiClient;
     private int RC_SIGN_IN = 1;
 
+    private ProgressDialog mProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+
+        mProgress = new ProgressDialog(this);
 
         mLoginEmail = (EditText) findViewById(R.id.loginEmail);
         mLoginPassword = (EditText) findViewById(R.id.loginPassword);
@@ -105,6 +110,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
 
+            mProgress.setMessage("Efetuando login...");
+            mProgress.show();
+
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -128,17 +136,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         edit.putString("username", name);
                         edit.commit();
 
+                        mProgress.dismiss();
+
                         LoginActivity.this.finish();
 
                     } else {
 
-                        Toast.makeText(LoginActivity.this, "Error Login", Toast.LENGTH_LONG).show();
+                        mProgress.dismiss();
+                        Toast.makeText(LoginActivity.this, "Email ou senha incorreto!", Toast.LENGTH_LONG).show();
 
                     }
 
                 }
             });
 
+        } else {
+            Toast.makeText(LoginActivity.this, "É necessário preencher todos os campos!", Toast.LENGTH_LONG).show();
         }
 
     }

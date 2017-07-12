@@ -4,52 +4,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="br.ufg.inf.dsdm.ondetem.RegisterActivity">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
-        <EditText
-            android:id="@+id/realName"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Nome"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="4dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/emailUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="E-mail"
-            android:inputType="textEmailAddress" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_above="@+id/realName"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/logo" />
 
-        <EditText
-            android:id="@+id/passwordUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Senha"
-            android:inputType="textPassword" />
+            <EditText
+                android:id="@+id/realName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:hint="Nome"
+                android:inputType="textPersonName"
+                android:shadowColor="@color/colorPrimaryText"
+                android:textColor="@color/colorPrimaryText"
+                android:textColorHighlight="@color/colorPrimaryText"
+                android:textColorHint="@color/colorPrimaryText"
+                android:textColorLink="@color/colorPrimaryText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_editor_absoluteY="7dp" />
 
-        <Button
-            android:id="@+id/registerUser"
-            android:layout_width="368dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cadastrar" />
+            <EditText
+                android:id="@+id/emailUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/realName"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:hint="E-mail"
+                android:inputType="textEmailAddress"
+                android:shadowColor="@color/colorPrimaryText"
+                android:textColor="@color/colorPrimaryText"
+                android:textColorHighlight="@color/colorPrimaryText"
+                android:textColorHint="@color/colorPrimaryText"
+                android:textColorLink="@color/colorPrimaryText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_editor_absoluteY="7dp" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/passwordUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/emailUser"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:hint="Senha"
+                android:inputType="textPassword"
+                android:shadowColor="@color/colorPrimaryText"
+                android:textColor="@color/colorPrimaryText"
+                android:textColorHighlight="@color/colorPrimaryText"
+                android:textColorHint="@color/colorPrimaryText"
+                android:textColorLink="@color/colorPrimaryText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_editor_absoluteY="7dp" />
 
+            <Button
+                android:id="@+id/registerUser"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="CADASTRAR"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="93dp"
+                android:layout_below="@+id/passwordUser"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="14dp" />
+
+        </RelativeLayout>
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>
