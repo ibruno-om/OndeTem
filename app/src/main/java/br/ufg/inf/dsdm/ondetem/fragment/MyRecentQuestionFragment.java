@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,6 +59,12 @@ public class MyRecentQuestionFragment extends Fragment {
                 new ArrayList<Pergunta>(perguntas));
 
         mQuestionList = (ListView) view.findViewById(R.id.questionList);
+
+        TextView empty = (TextView) view.findViewById(R.id.questionListEmpty);
+
+        empty.setText(getResources().getText(R.string.questionRecentListEmpty));
+
+        mQuestionList.setEmptyView(empty);
 
         mQuestionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
