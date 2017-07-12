@@ -52,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
     private View headerView;
     private TextView navUsername;
     private FirebaseUser mUser;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,8 +237,12 @@ public class HomeActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         navUsername = (TextView) headerView.findViewById(R.id.textView);
         Menu navMenu = navigationView.getMenu();
+
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+        String username = prefs.getString("username","");
+
         if (mUser != null) {
-            navUsername.setText(mUser.getDisplayName());
+            navUsername.setText(username);
             navMenu.findItem(R.id.myQuestions).setVisible(true);
             navMenu.findItem(R.id.minhaConta).setVisible(true);
             navMenu.findItem(R.id.login).setVisible(false);
