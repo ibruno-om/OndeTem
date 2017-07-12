@@ -254,7 +254,7 @@ public class HomeActivity extends AppCompatActivity {
             navMenu.findItem(R.id.login).setVisible(true);
             navMenu.findItem(R.id.logout).setVisible(false);
         }
-
+        setQuestionFragment(new MyRecentQuestionFragment());
     }
 
 
