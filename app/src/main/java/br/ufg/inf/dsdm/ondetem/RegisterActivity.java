@@ -1,7 +1,9 @@
 package br.ufg.inf.dsdm.ondetem;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
+import java.util.HashSet;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -82,6 +86,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                         user.updateProfile(profileUpdates);
 
+                        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("username", name);
+                        editor.commit();
 
                         mProgress.dismiss();
 
