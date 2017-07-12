@@ -1,6 +1,7 @@
 package br.ufg.inf.dsdm.ondetem;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -85,10 +86,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                         user.updateProfile(profileUpdates);
 
-                        String key = getResources().getString(R.string.uid_user_session);
-                        SharedPreferences prefs = getSharedPreferences(key, MODE_PRIVATE);
+                        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
                         SharedPreferences.Editor editor = prefs.edit();
-                        editor.putString(key, name);
+                        editor.putString("username", name);
                         editor.commit();
 
                         mProgress.dismiss();

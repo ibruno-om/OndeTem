@@ -237,9 +237,9 @@ public class HomeActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         navUsername = (TextView) headerView.findViewById(R.id.textView);
         Menu navMenu = navigationView.getMenu();
-        String key = getResources().getString(R.string.uid_user_session);
-        SharedPreferences prefs = getSharedPreferences(key, MODE_PRIVATE);
-        String username = prefs.getString(key,"");
+
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+        String username = prefs.getString("username","");
 
         if (mUser != null) {
             navUsername.setText(username);

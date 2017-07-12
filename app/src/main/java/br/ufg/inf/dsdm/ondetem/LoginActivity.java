@@ -87,8 +87,12 @@ public class LoginActivity extends AppCompatActivity {
                         editor.remove(key);
                         editor.commit();
                         editor.putString(key, uid);
-                        editor.putString(key, name);
                         editor.commit();
+
+                        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+                        SharedPreferences.Editor edit = prefs.edit();
+                        edit.putString("username", name);
+                        edit.commit();
 
                         LoginActivity.this.finish();
 
