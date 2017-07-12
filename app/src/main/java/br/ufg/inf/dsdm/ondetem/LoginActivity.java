@@ -83,9 +83,11 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 
                         SharedPreferences.Editor editor = sharedPref.edit();
+                        String name = mAuth.getCurrentUser().getDisplayName();
                         editor.remove(key);
                         editor.commit();
                         editor.putString(key, uid);
+                        editor.putString(key, name);
                         editor.commit();
 
                         LoginActivity.this.finish();
