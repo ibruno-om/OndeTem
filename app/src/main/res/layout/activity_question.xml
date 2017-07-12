@@ -20,11 +20,6 @@
                 android:id="@+id/questionContent"
                 style="@style/QuestionText" />
 
-            <TextView
-                android:id="@+id/questionAuthor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
 
             <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -38,6 +33,23 @@
                     android:id="@+id/locationList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+
+
+                <LinearLayout
+                    android:id="@+id/locationListEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/EmptyMessage"
+                        android:text="@string/empty_location_list" />
+
+                    <TextView
+                        style="@style/EmptyMessageMin"
+                        android:text="@string/first" />
+
+                </LinearLayout>
 
             </android.support.v7.widget.CardView>
 

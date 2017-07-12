@@ -8,10 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -36,7 +34,6 @@ import br.ufg.inf.dsdm.ondetem.model.Pergunta;
 public class QuestionActivity extends AppCompatActivity implements ValueEventListener {
 
     private TextView mQuestionContent;
-    private TextView mQuestionAuthor;
     private FloatingActionButton mFabAddLocation;
     private int PLACE_PICKER_REQUEST = 1;
     private PerguntaHelper perguntaHelper;
@@ -71,7 +68,6 @@ public class QuestionActivity extends AppCompatActivity implements ValueEventLis
         /* Listar localização */
 
         mQuestionContent = (TextView) findViewById(R.id.questionContent);
-        mQuestionAuthor = (TextView) findViewById(R.id.questionAuthor);
         mFabAddLocation = (FloatingActionButton) findViewById(R.id.fabAddLocation);
 
         mLocationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,6 +82,8 @@ public class QuestionActivity extends AppCompatActivity implements ValueEventLis
                 startActivity(intent);
             }
         });
+
+        mLocationList.setEmptyView(findViewById(R.id.locationListEmpty));
 
 
         mQuestionContent.setText("Onde tem: " + pergunta.getConteudo() + "?");
@@ -122,9 +120,6 @@ public class QuestionActivity extends AppCompatActivity implements ValueEventLis
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName() + " " + place.getId());
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-
 
                 String uuid = perguntaHelper.getUUID(pergunta);
 

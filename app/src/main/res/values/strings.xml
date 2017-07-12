@@ -12,6 +12,17 @@
     <string name="uid_user_session">UID_USER_SESSION</string>
     <string name="anonymous_user">anonymous</string>
     <string name="empty_question_list">Nenhum resultado encontrado</string>
+    <string name="empty_location_list">Nenhuma localização cadastrada</string>
+    <string name="first">Seja o primeiro a responder</string>
+    <string name="helpText">Onde Tem?\n\n
+        \t\tAplicativo Android Desenvolvido por alunos da Universidade Federal de Goiás,
+    na disciplina de Desenvolvimento de Software para Dispositivos Ubíquo.\n\n
+    \t\tO aplicativo tem como objetivo construir uma rede colaborativa para ajudar
+    pessoas que estão procurando produtos e serviços difíceis de serem encontrados,
+    onde um usuário da rede que saíba Onde Tem o produto, poderá ajudar na busca
+    e cooperar informando onde encontrar este.
+    </string>
+
 
 
     <!-- Strings related to login -->
@@ -27,4 +38,7 @@
         completions."
     </string>
     <string name="title_activity_maps">Map</string>
+    <string name="myQuestionTitle">Minhas Perguntas</string>
+    <string name="loginButton">ENTRAR</string>
+    <string name="questionRecentListEmpty">Nenhuma pesquisa recente</string>
 </resources>
