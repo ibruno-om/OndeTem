@@ -72,7 +72,7 @@ public class QuestionActivity extends AppCompatActivity implements ValueEventLis
         mFabAddLocation = (FloatingActionButton) findViewById(R.id.fabAddLocation);
 
 
-        mQuestionContent.setText(pergunta.getConteudo());
+        mQuestionContent.setText("Onde tem: " + pergunta.getConteudo() + "?");
 
         mFabAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
