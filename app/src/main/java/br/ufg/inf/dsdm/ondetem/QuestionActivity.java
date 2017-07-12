@@ -1,11 +1,13 @@
 package br.ufg.inf.dsdm.ondetem;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import br.ufg.inf.dsdm.ondetem.adapter.AdapterLocalizacao;
 import br.ufg.inf.dsdm.ondetem.helpers.PerguntaHelper;
 import br.ufg.inf.dsdm.ondetem.model.Localizacao;
 import br.ufg.inf.dsdm.ondetem.model.Pergunta;
@@ -40,7 +43,7 @@ public class QuestionActivity extends AppCompatActivity implements ValueEventLis
 
 
     private DatabaseReference mDatabase;
-    private ArrayAdapter<Localizacao> mAdapter;
+    private AdapterLocalizacao mAdapter;
 
     private Pergunta pergunta;
     private ListView mLocationList;
@@ -57,7 +60,7 @@ public class QuestionActivity extends AppCompatActivity implements ValueEventLis
         /* Listar localização */
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mAdapter = new ArrayAdapter<Localizacao>(this, android.R.layout.simple_list_item_1,
+        mAdapter = new AdapterLocalizacao(this, R.layout.list_location,
                 new ArrayList<Localizacao>());
 
         mLocationList = (ListView) findViewById(R.id.locationList);
@@ -71,8 +74,21 @@ public class QuestionActivity extends AppCompatActivity implements ValueEventLis
         mQuestionAuthor = (TextView) findViewById(R.id.questionAuthor);
         mFabAddLocation = (FloatingActionButton) findViewById(R.id.fabAddLocation);
 
+        mLocationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        mQuestionContent.setText(pergunta.getConteudo());
+                Localizacao localizacao = (Localizacao) parent.getItemAtPosition(position);
+
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?daddr=" + localizacao.getLatitude() +
+                                "," + localizacao.getLongitude()));
+                startActivity(intent);
+            }
+        });
+
+
+        mQuestionContent.setText("Onde tem: " + pergunta.getConteudo() + "?");
 
         mFabAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override

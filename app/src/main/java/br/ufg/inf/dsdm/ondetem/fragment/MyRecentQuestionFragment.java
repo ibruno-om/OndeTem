@@ -1,6 +1,7 @@
 package br.ufg.inf.dsdm.ondetem.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,14 +9,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import br.ufg.inf.dsdm.ondetem.QuestionActivity;
 import br.ufg.inf.dsdm.ondetem.R;
+import br.ufg.inf.dsdm.ondetem.model.Pergunta;
 
 /**
  * Created by ibruno on 08/07/17.
@@ -23,7 +29,7 @@ import br.ufg.inf.dsdm.ondetem.R;
 
 public class MyRecentQuestionFragment extends Fragment {
 
-    private ArrayAdapter<String> mAdapter;
+    private ArrayAdapter<Pergunta> mAdapter;
     private ListView mQuestionList;
 
     @Nullable
@@ -33,13 +39,35 @@ public class MyRecentQuestionFragment extends Fragment {
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-        Set<String> questions = sharedPref.getStringSet(getResources()
-                .getString(R.string.recent_question_lits), new HashSet<String>());
+        List<String> questions = new ArrayList<String>(sharedPref.getStringSet(getResources()
+                .getString(R.string.recent_question_lits), new HashSet<String>()));
 
-        mAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,
-                new ArrayList<String>(questions));
+        List<Pergunta> perguntas = new ArrayList<Pergunta>();
+
+        Collections.sort(questions, Collections.<String>reverseOrder());
+
+        for (String question : questions) {
+            String pergunta = question.substring(question.lastIndexOf(";") + 1);
+
+            perguntas.add(new Pergunta(pergunta));
+        }
+
+        mAdapter = new ArrayAdapter<Pergunta>(getContext(), android.R.layout.simple_list_item_1,
+                new ArrayList<Pergunta>(perguntas));
 
         mQuestionList = (ListView) view.findViewById(R.id.questionList);
+
+        mQuestionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Pergunta pergunta = (Pergunta) parent.getItemAtPosition(position);
+
+                Intent intent = new Intent(getActivity(), QuestionActivity.class);
+                intent.putExtra("question", pergunta);
+
+                startActivity(intent);
+            }
+        });
 
         mQuestionList.setAdapter(mAdapter);
 

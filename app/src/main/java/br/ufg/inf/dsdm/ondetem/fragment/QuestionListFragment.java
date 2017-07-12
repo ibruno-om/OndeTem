@@ -63,6 +63,8 @@ public abstract class QuestionListFragment extends Fragment implements ValueEven
 
         mQuestionList = (ListView) view.findViewById(R.id.questionList);
 
+        mQuestionList.setEmptyView(view.findViewById(R.id.questionListEmpty));
+
         mQuestionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

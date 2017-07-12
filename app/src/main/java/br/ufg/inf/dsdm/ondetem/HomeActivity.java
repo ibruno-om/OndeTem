@@ -28,7 +28,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import br.ufg.inf.dsdm.ondetem.fragment.MyRecentQuestionFragment;
@@ -48,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
     private View headerView;
     private TextView navUsername;
     private FirebaseUser mUser;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +83,21 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Log.d("MENU", "Foi");
 
+
                 switch (item.getItemId()) {
                     case R.id.login:
-                        mDrawerLayout.closeDrawers();
+
                         Intent intentLogin = new Intent(HomeActivity.this, LoginActivity.class);
                         startActivity(intentLogin);
 
                         break;
+                    case R.id.myQuestions:
+
+                        Intent intentMyQuestion = new Intent(HomeActivity.this, MyQuestionActivity.class);
+                        startActivity(intentMyQuestion);
+
+                        break;
+
                     case R.id.logout:
 
                         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
@@ -92,13 +105,15 @@ public class HomeActivity extends AppCompatActivity {
                         editor.clear();
                         editor.commit();
                         mAuth.signOut();
-                        mDrawerLayout.closeDrawers();
                         Toast.makeText(HomeActivity.this, "Seu usuário foi desconetado!",
                                 Toast.LENGTH_SHORT).show();
                         updateUI();
 
                         break;
                 }
+
+                mDrawerLayout.closeDrawers();
+
                 return false;
             }
         });
@@ -125,19 +140,19 @@ public class HomeActivity extends AppCompatActivity {
 
         MenuItem item = menu.findItem(R.id.menuSearch);
 
-        SearchView search = (SearchView) item.getActionView();
+        final SearchView search = (SearchView) item.getActionView();
         search.setQueryHint(getResources().getString(R.string.app_name));
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (!TextUtils.isEmpty(query) && query.length() >= 3) {
-                    Toast.makeText(HomeActivity.this, query, Toast.LENGTH_SHORT).show();
                     registerRecentQuestion(query);
                     SearchQuestionsFragment searchQuestionsFragment = new SearchQuestionsFragment();
                     searchQuestionsFragment.setQuery(query);
                     searchQuestionsFragment.setInsert(true);
                     setQuestionFragment(searchQuestionsFragment);
+                    search.clearFocus();
                 } else {
                     Toast.makeText(HomeActivity.this, "Quantidade insuficiente de caracteres!",
                             Toast.LENGTH_SHORT).show();
@@ -184,20 +199,33 @@ public class HomeActivity extends AppCompatActivity {
         String key = getResources().getString(R.string.recent_question_lits);
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 
-        Set<String> questions = sharedPref.getStringSet(key, new HashSet<String>());
+        List<String> questions = new ArrayList<String>(sharedPref.getStringSet(key,
+                new HashSet<String>()));
 
-        questions.add(query);
+        questions.add(Calendar.getInstance().getTimeInMillis() + ";" + query);
+
+        if (!questions.isEmpty()) {
+
+            Collections.sort(questions, Collections.<String>reverseOrder());
+
+            if (questions.size() > 10){
+                questions.remove(10);
+            }
+
+
+        }
+
 
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove(key);
         editor.commit();
-        editor.putStringSet(key, questions);
+        editor.putStringSet(key, new HashSet<String>(questions));
         editor.commit();
 
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         updateUI();
 
@@ -209,8 +237,12 @@ public class HomeActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         navUsername = (TextView) headerView.findViewById(R.id.textView);
         Menu navMenu = navigationView.getMenu();
+
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+        String username = prefs.getString("username","");
+
         if (mUser != null) {
-            navUsername.setText(mUser.getDisplayName());
+            navUsername.setText(username);
             navMenu.findItem(R.id.myQuestions).setVisible(true);
             navMenu.findItem(R.id.minhaConta).setVisible(true);
             navMenu.findItem(R.id.login).setVisible(false);

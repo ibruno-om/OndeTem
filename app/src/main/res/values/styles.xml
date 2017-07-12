@@ -9,4 +9,24 @@
         <item name="android:textColorPrimary">@color/colorPrimary</item>
     </style>
 
+    <style name="EmptyMessage" >
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+
+    <style name="QuestionText" >
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
