@@ -11,19 +11,15 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/linearQuestion"
+            android:id="@+id/linearMyQuestion"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include
-                layout="@menu/navigation_action"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
 
             <FrameLayout
-                android:id="@+id/questionListFrame"
+                android:id="@+id/myQuestionListFrame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
