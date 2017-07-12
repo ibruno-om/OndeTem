@@ -98,6 +98,13 @@ public class HomeActivity extends AppCompatActivity {
 
                         break;
 
+                    case R.id.help:
+
+                        Intent intentHelp = new Intent(HomeActivity.this, HelpActivity.class);
+                        startActivity(intentHelp);
+
+                        break;
+
                     case R.id.logout:
 
                         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
