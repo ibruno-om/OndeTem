@@ -18,10 +18,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import org.w3c.dom.Text;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -39,6 +44,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private PerguntaHelper perguntaHelper;
+
+    private View headerView;
+    private TextView navUsername;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +69,10 @@ public class HomeActivity extends AppCompatActivity {
 
         setQuestionFragment(new MyRecentQuestionFragment());
 
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        updateUI();
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -69,13 +80,22 @@ public class HomeActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.login:
-
+                        mDrawerLayout.closeDrawers();
                         Intent intentLogin = new Intent(HomeActivity.this, LoginActivity.class);
                         startActivity(intentLogin);
 
                         break;
                     case R.id.logout:
+
+                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.clear();
+                        editor.commit();
                         mAuth.signOut();
+                        mDrawerLayout.closeDrawers();
+                        Toast.makeText(HomeActivity.this, "Seu usuário foi desconetado!",
+                                Toast.LENGTH_SHORT).show();
+                        updateUI();
 
                         break;
                 }
@@ -173,6 +193,35 @@ public class HomeActivity extends AppCompatActivity {
         editor.commit();
         editor.putStringSet(key, questions);
         editor.commit();
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateUI();
+
+    }
+
+    private void updateUI() {
+        mUser = mAuth.getCurrentUser();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        navUsername = (TextView) headerView.findViewById(R.id.textView);
+        Menu navMenu = navigationView.getMenu();
+        if (mUser != null) {
+            navUsername.setText(mUser.getDisplayName());
+            navMenu.findItem(R.id.myQuestions).setVisible(true);
+            navMenu.findItem(R.id.minhaConta).setVisible(true);
+            navMenu.findItem(R.id.login).setVisible(false);
+            navMenu.findItem(R.id.logout).setVisible(true);
+        } else {
+            navUsername.setText("Não registrado");
+            navMenu.findItem(R.id.myQuestions).setVisible(false);
+            navMenu.findItem(R.id.minhaConta).setVisible(false);
+            navMenu.findItem(R.id.login).setVisible(true);
+            navMenu.findItem(R.id.logout).setVisible(false);
+        }
 
     }
 

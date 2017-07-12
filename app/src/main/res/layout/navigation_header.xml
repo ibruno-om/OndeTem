@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="100dp"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:id="@+id/textView"
@@ -9,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:padding="15dp"
-        android:text="Nome Usuário"
-        android:textColor="@color/colorPrimary"
+        android:text="Não registrado"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="18dp" />
 </RelativeLayout>
