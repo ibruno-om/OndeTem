@@ -7,23 +7,21 @@
     tools:context="br.ufg.inf.dsdm.ondetem.LoginActivity">
 
     <FrameLayout
-        android:layout_width="368dp"
-        android:layout_height="495dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp">
 
         <LinearLayout
             android:id="@+id/linearQuestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
             <EditText
                 android:id="@+id/loginEmail"
-                android:layout_width="368dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="E-mail"
@@ -34,7 +32,7 @@
 
             <EditText
                 android:id="@+id/loginPassword"
-                android:layout_width="368dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Senha"
@@ -48,6 +46,7 @@
                 android:layout_width="368dp"
                 android:layout_height="wrap_content"
                 android:text="ENTRAR"
+                android:layout_gravity="center_horizontal"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="93dp" />
 
@@ -56,6 +55,7 @@
                 android:layout_width="368dp"
                 android:layout_height="wrap_content"
                 android:text="CRIAR CONTA"
+                android:layout_gravity="center_horizontal"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="445dp" />
         </LinearLayout>

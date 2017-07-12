@@ -12,13 +12,27 @@ public class Localizacao {
 
     private double longitude;
 
+    private long timestamp;
+
+    private String nome;
+
     public Localizacao() {
     }
 
-    public Localizacao(String uuid, double latitude, double longitude) {
+    public Localizacao(String uuid, double latitude, double longitude, long timestamp, String nome) {
         this.uuid = uuid;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.timestamp = timestamp;
+        this.nome = nome;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getUuid() {
@@ -43,5 +57,18 @@ public class Localizacao {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    @Override
+    public String toString() {
+        return getNome();
     }
 }
