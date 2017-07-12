@@ -28,7 +28,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import br.ufg.inf.dsdm.ondetem.fragment.MyRecentQuestionFragment;
@@ -135,19 +139,19 @@ public class HomeActivity extends AppCompatActivity {
 
         MenuItem item = menu.findItem(R.id.menuSearch);
 
-        SearchView search = (SearchView) item.getActionView();
+        final SearchView search = (SearchView) item.getActionView();
         search.setQueryHint(getResources().getString(R.string.app_name));
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (!TextUtils.isEmpty(query) && query.length() >= 3) {
-                    Toast.makeText(HomeActivity.this, query, Toast.LENGTH_SHORT).show();
                     registerRecentQuestion(query);
                     SearchQuestionsFragment searchQuestionsFragment = new SearchQuestionsFragment();
                     searchQuestionsFragment.setQuery(query);
                     searchQuestionsFragment.setInsert(true);
                     setQuestionFragment(searchQuestionsFragment);
+                    search.clearFocus();
                 } else {
                     Toast.makeText(HomeActivity.this, "Quantidade insuficiente de caracteres!",
                             Toast.LENGTH_SHORT).show();
@@ -194,20 +198,33 @@ public class HomeActivity extends AppCompatActivity {
         String key = getResources().getString(R.string.recent_question_lits);
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 
-        Set<String> questions = sharedPref.getStringSet(key, new HashSet<String>());
+        List<String> questions = new ArrayList<String>(sharedPref.getStringSet(key,
+                new HashSet<String>()));
 
-        questions.add(query);
+        questions.add(Calendar.getInstance().getTimeInMillis() + ";" + query);
+
+        if (!questions.isEmpty()) {
+
+            Collections.sort(questions, Collections.<String>reverseOrder());
+
+            if (questions.size() > 10){
+                questions.remove(10);
+            }
+
+
+        }
+
 
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove(key);
         editor.commit();
-        editor.putStringSet(key, questions);
+        editor.putStringSet(key, new HashSet<String>(questions));
         editor.commit();
 
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         updateUI();
 

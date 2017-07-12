@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,13 +39,17 @@ public class MyRecentQuestionFragment extends Fragment {
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-        Set<String> questions = sharedPref.getStringSet(getResources()
-                .getString(R.string.recent_question_lits), new HashSet<String>());
+        List<String> questions = new ArrayList<String>(sharedPref.getStringSet(getResources()
+                .getString(R.string.recent_question_lits), new HashSet<String>()));
 
         List<Pergunta> perguntas = new ArrayList<Pergunta>();
 
+        Collections.sort(questions, Collections.<String>reverseOrder());
+
         for (String question : questions) {
-            perguntas.add(new Pergunta(question));
+            String pergunta = question.substring(question.lastIndexOf(";") + 1);
+
+            perguntas.add(new Pergunta(pergunta));
         }
 
         mAdapter = new ArrayAdapter<Pergunta>(getContext(), android.R.layout.simple_list_item_1,
